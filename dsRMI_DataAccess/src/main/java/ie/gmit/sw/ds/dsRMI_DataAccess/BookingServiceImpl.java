@@ -19,11 +19,9 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 
 	protected BookingServiceImpl() throws RemoteException, SQLException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	// connect to the database
-
 	DataSource mysqlDS;
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookingservice?useSSL=false", "root",
 			""); // connect to the database

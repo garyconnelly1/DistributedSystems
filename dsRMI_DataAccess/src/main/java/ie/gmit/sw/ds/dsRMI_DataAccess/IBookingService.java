@@ -15,6 +15,4 @@ public interface IBookingService extends Remote{
 	
 	public void deleteBooking(String query) throws RemoteException; // to delete an existing booking
 	
-	
-
 }
