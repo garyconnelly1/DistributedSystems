@@ -16,17 +16,20 @@ import java.rmi.server.*;
 
 public class BookingServiceImpl extends UnicastRemoteObject implements IBookingService {
 	private static final long serialVersionUID = 1L;
+	// connect to the database
+	DataSource mysqlDS;
+	Statement stmt;
 
 	protected BookingServiceImpl() throws RemoteException, SQLException {
 		super();
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carbookingproject?useSSL=false", "root",
+				""); // connect to the database
+
+		stmt = conn.createStatement(); // create the statement
 	}
 
-	// connect to the database
-	DataSource mysqlDS;
-	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookingservice?useSSL=false", "root",
-			""); // connect to the database
-
-	Statement stmt = conn.createStatement(); // create the statement
+	
+	
 
 	// Override implement methods
 	public void createBooking(String query) throws RemoteException {
