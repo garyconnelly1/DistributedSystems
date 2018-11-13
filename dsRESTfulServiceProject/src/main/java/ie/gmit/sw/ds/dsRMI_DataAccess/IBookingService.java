@@ -3,12 +3,13 @@ package ie.gmit.sw.ds.dsRMI_DataAccess;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public interface IBookingService  extends Remote{
 	
 	public void createBooking(String query) throws RemoteException; // to create a booking
 	
-	public ResultSet readBookings() throws RemoteException; // to list all the bookings
+	public String readBookings() throws RemoteException; // to list all the bookings
 	
 	public void updateBooking(String query) throws RemoteException; // to update an existing booking
 	

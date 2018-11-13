@@ -5,11 +5,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import ie.gmit.sw.dsControllers.BookingController;
+
 /**
  * Root resource (exposed at "myresource" path)
  */
 @Path("myresource")
 public class MyResource {
+	BookingController controller = new BookingController();
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -20,6 +23,8 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+    	String returnStatement = controller.getAllBookings();
+    	
+        return returnStatement;
     }
 }

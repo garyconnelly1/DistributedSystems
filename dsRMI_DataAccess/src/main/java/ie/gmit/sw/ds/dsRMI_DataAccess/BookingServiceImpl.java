@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
@@ -19,6 +20,7 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 	// connect to the database
 	DataSource mysqlDS;
 	Statement stmt;
+	
 
 	protected BookingServiceImpl() throws RemoteException, SQLException {
 		super();
@@ -40,17 +42,44 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 		}
 	}
 
-	public ResultSet readBookings() throws RemoteException {
+	public String readBookings() throws RemoteException {
+		System.out.println("inside readBookings");
 		String strSelect = "select * from bookings";
 		ResultSet rset = null;
+		ArrayList<ResultSet> resultSetSerialized=new ArrayList<ResultSet>();
+		Booking booking = new Booking();
+		// testing ////////////////////////
+		/*
+		int bookId;
+		int vId;
+		int cId;
+		String startd = null;
+		String endD;
+		*/
 
 		try {
 			rset = stmt.executeQuery(strSelect); // generate the result set
+			//resultSetSerialized.add(rset);
 		} catch (SQLException e) {
+			System.out.println("sql error");
+		}
+		
+		try {
+			while(rset.next()) {
+				booking.setBookingId(rset.getInt("booking_id"));
+				booking.setVehicleId(rset.getInt("vehicle_id"));
+				booking.setCustomerId(rset.getInt("customer_id"));
+				booking.setStartDate(rset.getString("start_date"));
+				booking.setEndDate(rset.getString("end_date"));
+			}
+		} catch (SQLException e) {
+			
 			e.printStackTrace();
 		}
+		
+		System.out.println(rset);
 
-		return rset;
+		return booking.toString();
 	}
 
 	public void updateBooking(String query) throws RemoteException {
