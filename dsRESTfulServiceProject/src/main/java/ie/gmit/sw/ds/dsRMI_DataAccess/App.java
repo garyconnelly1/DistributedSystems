@@ -7,6 +7,7 @@ import java.rmi.registry.LocateRegistry;
 public class App 
 {
 	public static void main(String[] args) throws Exception {
+		
 		IBookingService bookingService = new BookingServiceImpl();
 
 		LocateRegistry.createRegistry(1099); // Start the RMI registry on port
@@ -21,5 +22,7 @@ public class App
 
 		System.out.println("Server ready."); // Print a message to standard
 												// output
+												 
+												 
 	}
 }

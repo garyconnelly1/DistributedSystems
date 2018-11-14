@@ -2,19 +2,20 @@ package ie.gmit.sw.ds.dsRMI_DataAccess;
 
 import java.io.Serializable;
 
-public class Booking implements Serializable{
+public class ReturnedBooking implements Serializable{
 	
+	private static final long serialVersionUID = 1190476516911661470L;
 	private int bookingId;
 	private int vehicleId;
 	private int customerId;
 	private String startDate;
 	private String endDate;
 	
-	public Booking() {
+	public ReturnedBooking() {
 		
 	}
 	
-	public Booking(int bookingId, int vehicleId, int customerId, String startDate, String endDate) {
+	public ReturnedBooking(int bookingId, int vehicleId, int customerId, String startDate, String endDate) {
 		super();
 		this.bookingId = bookingId;
 		this.vehicleId = vehicleId;

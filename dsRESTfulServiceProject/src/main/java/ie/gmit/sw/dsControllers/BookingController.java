@@ -7,8 +7,12 @@ import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import ie.gmit.sw.ds.dsRMI_DataAccess.IBookingService;
+import ie.gmit.sw.dsModels.Booking;
+import ie.gmit.sw.ds.dsRMI_DataAccess.ReturnedBooking;
+
 
 public class BookingController {
 	IBookingService bookingService;
@@ -32,12 +36,13 @@ public class BookingController {
 	
 	public String getAllBookings() {
 		ResultSet resultSet = null;
-		ArrayList<ResultSet> serializedList = new ArrayList<ResultSet>();
+		List<ReturnedBooking> bookings = new ArrayList<ReturnedBooking>();
+		ReturnedBooking resultBooking;
 		String startDate = null;
 		String resultObject = null;
 		
 		try {
-			resultObject = bookingService.readBookings();
+			bookings = bookingService.readBookings();
 			//resultSet = serializedList.get(0);
 			//while(resultSet.next()) {
 			//	startDate = resultSet.getString("start_date");
@@ -49,9 +54,11 @@ public class BookingController {
 			e.printStackTrace();
 		}
 		
+		System.out.println(bookings.size());
+		resultBooking = bookings.get(0);
 		
-		
-		return resultObject;
+		System.out.println(resultBooking.getBookingId() + "//////////////////////////////////////////////"); // for testing purposes
+		return resultBooking.toString();
 	}
 
 

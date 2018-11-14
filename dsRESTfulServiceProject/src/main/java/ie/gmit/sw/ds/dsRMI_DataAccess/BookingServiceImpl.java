@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -42,20 +43,13 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 		}
 	}
 
-	public String readBookings() throws RemoteException {
+	public List<ReturnedBooking> readBookings() throws RemoteException {
 		System.out.println("inside readBookings");
 		String strSelect = "select * from bookings";
 		ResultSet rset = null;
 		ArrayList<ResultSet> resultSetSerialized=new ArrayList<ResultSet>();
-		Booking booking = new Booking();
-		// testing ////////////////////////
-		/*
-		int bookId;
-		int vId;
-		int cId;
-		String startd = null;
-		String endD;
-		*/
+		ReturnedBooking booking = new ReturnedBooking();
+		List<ReturnedBooking> bookings = new ArrayList<ReturnedBooking>();
 
 		try {
 			rset = stmt.executeQuery(strSelect); // generate the result set
@@ -71,6 +65,8 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 				booking.setCustomerId(rset.getInt("customer_id"));
 				booking.setStartDate(rset.getString("start_date"));
 				booking.setEndDate(rset.getString("end_date"));
+				
+				bookings.add(booking);
 			}
 		} catch (SQLException e) {
 			
@@ -79,7 +75,7 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 		
 		System.out.println(rset);
 
-		return booking.toString();
+		return bookings;
 	}
 
 	public void updateBooking(String query) throws RemoteException {
