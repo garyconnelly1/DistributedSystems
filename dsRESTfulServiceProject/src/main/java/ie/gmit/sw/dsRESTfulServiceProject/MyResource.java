@@ -7,6 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import ie.gmit.sw.ds.dsRMI_DataAccess.ReturnedBooking;
 import ie.gmit.sw.dsControllers.BookingController;
 import ie.gmit.sw.dsMarshal.BookingMarshal;
 
@@ -14,7 +15,7 @@ import ie.gmit.sw.dsMarshal.BookingMarshal;
  * Root resource (exposed at "myresource" path)
  */
 @Path("myresource")
-public class MyResource extends BookingMarshal{
+public class MyResource{
 	BookingController controller = new BookingController();
 
     /**
@@ -35,6 +36,9 @@ public class MyResource extends BookingMarshal{
     @Produces(MediaType.APPLICATION_XML)
     @Path("/{value}")
     public Response getById(@PathParam("value") String value) {
+    	int id = Integer.parseInt(value); // convert the value to an int
+    	ReturnedBooking returnedBooking = controller.getBookingById(id);
+    	System.out.println(returnedBooking.toString());
 		return null;
     	
     }

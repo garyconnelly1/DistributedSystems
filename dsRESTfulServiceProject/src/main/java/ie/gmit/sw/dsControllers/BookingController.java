@@ -40,28 +40,45 @@ public class BookingController {
 		ReturnedBooking resultBooking;
 		String startDate = null;
 		String resultObject = null;
-		
+
 		try {
 			bookings = bookingService.readBookings();
-			//resultSet = serializedList.get(0);
-			//while(resultSet.next()) {
-			//	startDate = resultSet.getString("start_date");
-			//}
 			System.out.println("=======================================");
 		} catch (RemoteException e) {
-			
+
 			System.out.println("error accessing data from remote object");
 			e.printStackTrace();
 		}
-		
+
 		System.out.println(bookings.size());
 		resultBooking = bookings.get(0);
-		
-		System.out.println(resultBooking.getBookingId() + "//////////////////////////////////////////////"); // for testing purposes
+
+		System.out.println(resultBooking.getBookingId() + "//////////////////////////////////////////////"); // for
+																												// testing
+																												// purposes
 		return resultBooking.toString();
 	}
 	
-	
+	public ReturnedBooking getBookingById(int id) {
+		List<ReturnedBooking> bookings = new ArrayList<ReturnedBooking>();
+		ReturnedBooking resultBooking = null;
+
+		try {
+			bookings = bookingService.readBookings();
+		} catch (RemoteException e) {
+			System.out.println("error accessing data from remote object");
+			e.printStackTrace();
+		}
+
+		for (ReturnedBooking b : bookings) {
+			if (b.getBookingId() == id) {
+				resultBooking = b;
+			}
+
+		}
+
+		return resultBooking;
+	}
 
 
 }
