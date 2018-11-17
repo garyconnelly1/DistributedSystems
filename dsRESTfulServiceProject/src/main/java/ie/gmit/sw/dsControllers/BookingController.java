@@ -60,6 +60,8 @@ public class BookingController {
 		System.out.println(resultBooking.getBookingId() + "//////////////////////////////////////////////"); // for testing purposes
 		return resultBooking.toString();
 	}
+	
+	
 
 
 }
