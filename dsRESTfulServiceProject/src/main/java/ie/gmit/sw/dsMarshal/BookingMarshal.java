@@ -15,7 +15,7 @@ public class BookingMarshal {
 	
 	public BookingMarshal() {} // empty constructor
 	
-	private String getBookingAsXML(Booking booking){
+	protected String getBookingAsXML(Booking booking){
 		// Marshal the Booking into XML
     	StringWriter sw = new StringWriter();
 		Marshaller m;

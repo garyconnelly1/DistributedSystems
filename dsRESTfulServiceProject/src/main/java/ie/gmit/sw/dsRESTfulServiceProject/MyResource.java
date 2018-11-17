@@ -10,12 +10,15 @@ import javax.ws.rs.core.Response;
 import ie.gmit.sw.ds.dsRMI_DataAccess.ReturnedBooking;
 import ie.gmit.sw.dsControllers.BookingController;
 import ie.gmit.sw.dsMarshal.BookingMarshal;
+import ie.gmit.sw.dsModels.Booking;
+import ie.gmit.sw.dsModels.Customer;
+import ie.gmit.sw.dsModels.Vehicle;
 
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("myresource")
-public class MyResource{
+@Path("bookings")
+public class MyResource extends BookingMarshal{
 	BookingController controller = new BookingController();
 
     /**
@@ -36,10 +39,28 @@ public class MyResource{
     @Produces(MediaType.APPLICATION_XML)
     @Path("/{value}")
     public Response getById(@PathParam("value") String value) {
+    	Booking booking = new Booking();
+    	Customer customer = new Customer();
+    	Vehicle vehicle = new Vehicle();
     	int id = Integer.parseInt(value); // convert the value to an int
     	ReturnedBooking returnedBooking = controller.getBookingById(id);
     	System.out.println(returnedBooking.toString());
-		return null;
+    	// construct the booking response object
+    	booking.setBookingId(returnedBooking.getBookingId());
+    	customer.setCustomerId(returnedBooking.getCustomerId());
+    	vehicle.setId(returnedBooking.getVehicleId());
+    	booking.setCustomer(customer);
+    	booking.setVehicle(vehicle);
+    	booking.setStartDate(returnedBooking.getStartDate());
+    	booking.setEndDate(returnedBooking.getEndDate());
+    	booking.setBookingNumber(null);
+    	
+    	String msg = getBookingAsXML(booking);
+    	
+    	
+    	System.out.println(msg);
+    	
+    	return Response.status(200).entity(msg).build();
     	
     }
 }
