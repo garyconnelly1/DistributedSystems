@@ -82,7 +82,12 @@ public class BookingController {
 	
 	public void createBooking(ReturnedBooking booking) {
 		String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + "," + booking.getVehicleId() + ","
-				+ booking.getCustomerId() + "," + booking.getStartDate() + "," + booking.getEndDate() + ");";
+				+ booking.getCustomerId() + ","  + booking.getStartDate()  + "," 
+				+ booking.getEndDate() + ");";
+		
+		//String query = "INSERT INTO bookings VALUES()";
+		
+		//System.out.pri
 
 		try {
 			bookingService.createBooking(query);
@@ -90,6 +95,20 @@ public class BookingController {
 			System.out.println("error on sql query in booking controller");
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateBooking(ReturnedBooking booking) {
+		String query = "UPDATE bookings SET(booking_id =" + booking.getBookingId() + ", " + "vehicle_id =" + booking.getVehicleId()
+		+ ", " + "customer_id =" + booking.getCustomerId() + ", " + "start_date =" + booking.getStartDate() + ", "
+				+ "end_date =" + booking.getEndDate() + ") WHERE booking_id=" + booking.getBookingId() + ";";
+		
+		try {
+			bookingService.updateBooking(query);
+		} catch (RemoteException e) {
+			System.out.println("error updating booking in Booking controller");
+			e.printStackTrace();
+		}
+		
 	}
 
 

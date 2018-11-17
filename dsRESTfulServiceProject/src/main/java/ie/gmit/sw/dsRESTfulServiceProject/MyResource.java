@@ -3,6 +3,7 @@ package ie.gmit.sw.dsRESTfulServiceProject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -89,5 +90,26 @@ public class MyResource extends BookingMarshal{
     	
     	
     	return Response.ok().build();
+    }
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_XML)
+    @Path("{id}")
+    public Response update(@PathParam("id") final String id, String input) {
+    	Booking booking = getBookingFromXML(input);
+    	Customer customer = booking.getCustomer();
+    	Vehicle vehicle = booking.getVehicle();
+    	int value = Integer.parseInt(id); // convert the value to an int
+    	ReturnedBooking returnedBooking = controller.getBookingById(value); // find the booking object that we need to update
+    	returnedBooking.setBookingId(booking.getBookingId());
+    	returnedBooking.setCustomerId(customer.getCustomerId());
+    	returnedBooking.setVehicleId(vehicle.getId());
+    	returnedBooking.setStartDate(booking.getStartDate());
+    	returnedBooking.setEndDate(booking.getEndDate());
+    	
+    	controller.updateBooking(returnedBooking);
+
+    	return Response.ok().build();
+    	
     }
 }
