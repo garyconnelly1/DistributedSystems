@@ -1,6 +1,8 @@
 package ie.gmit.sw.dsRESTfulServiceProject;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -62,5 +64,30 @@ public class MyResource extends BookingMarshal{
     	
     	return Response.status(200).entity(msg).build();
     	
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response create(String input) {
+    	System.out.println(input);
+    	
+    	Booking booking = getBookingFromXML(input);
+    	ReturnedBooking returnedBooking = new ReturnedBooking();
+    	Customer customer = booking.getCustomer();
+    	Vehicle vehicle = booking.getVehicle();
+    	
+    	//construct the returnedBooking object
+    	returnedBooking.setBookingId(booking.getBookingId());
+    	returnedBooking.setCustomerId(customer.getCustomerId());
+    	returnedBooking.setVehicleId(vehicle.getId());
+    	returnedBooking.setEndDate(booking.getEndDate());
+    	returnedBooking.setStartDate(booking.getStartDate());
+    	
+    	controller.createBooking(returnedBooking);
+    	
+    	//System.out.println("=================================/////////////////// " + returned);
+    	
+    	
+    	return Response.ok().build();
     }
 }

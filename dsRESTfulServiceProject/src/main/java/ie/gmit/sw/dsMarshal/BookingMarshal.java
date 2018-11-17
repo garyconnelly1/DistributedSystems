@@ -37,7 +37,7 @@ public class BookingMarshal {
 		return sw.toString();
 	}// end getBookingAsXML
 	
-	private Booking getBookingFromXML(String input) {
+	protected Booking getBookingFromXML(String input) {
 		// Unmarshal the Booking from XML
 		StringReader sr1 = new StringReader(input);
 		Unmarshaller um1;

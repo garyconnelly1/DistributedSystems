@@ -79,6 +79,18 @@ public class BookingController {
 
 		return resultBooking;
 	}
+	
+	public void createBooking(ReturnedBooking booking) {
+		String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + "," + booking.getVehicleId() + ","
+				+ booking.getCustomerId() + "," + booking.getStartDate() + "," + booking.getEndDate() + ");";
+
+		try {
+			bookingService.createBooking(query);
+		} catch (RemoteException e) {
+			System.out.println("error on sql query in booking controller");
+			e.printStackTrace();
+		}
+	}
 
 
 }

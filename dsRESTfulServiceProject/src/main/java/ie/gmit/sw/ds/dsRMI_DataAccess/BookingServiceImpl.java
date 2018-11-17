@@ -39,6 +39,7 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 		try {
 			stmt.executeUpdate(query); // just pass the query to the database
 		} catch (SQLException e) {
+			System.out.println("error processing sql query");
 			e.printStackTrace();
 		}
 	}
