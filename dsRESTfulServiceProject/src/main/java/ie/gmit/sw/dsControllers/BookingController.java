@@ -81,13 +81,16 @@ public class BookingController {
 	}
 	
 	public void createBooking(ReturnedBooking booking) {
+		//System.out.println("//////////// CREATE BOOKING" + booking.toString());
 		String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + "," + booking.getVehicleId() + ","
-				+ booking.getCustomerId() + ","  + booking.getStartDate()  + "," 
-				+ booking.getEndDate() + ");";
+				+ booking.getCustomerId() + ",\""  + booking.getStartDate()  + "\",\"" 
+				+ booking.getEndDate() + "\");";
 		
 		//String query = "INSERT INTO bookings VALUES()";
 		
 		//System.out.pri
+		
+		
 
 		try {
 			bookingService.createBooking(query);
@@ -98,9 +101,12 @@ public class BookingController {
 	}
 	
 	public void updateBooking(ReturnedBooking booking) {
-		String query = "UPDATE bookings SET(booking_id =" + booking.getBookingId() + ", " + "vehicle_id =" + booking.getVehicleId()
-		+ ", " + "customer_id =" + booking.getCustomerId() + ", " + "start_date =" + booking.getStartDate() + ", "
-				+ "end_date =" + booking.getEndDate() + ") WHERE booking_id=" + booking.getBookingId() + ";";
+		System.out.println("//////////// UPDATE BOOKING" + booking.toString());
+		String query = "UPDATE bookings SET vehicle_id =" + booking.getVehicleId()
+		+ ", " + "customer_id =" + booking.getCustomerId() + ", " + "start_date =\"" + booking.getStartDate() + "\", "
+				+ "end_date =\"" + booking.getEndDate() + "\" WHERE booking_id=" + booking.getBookingId() + ";";
+		
+		System.out.println("============UPDATE BOOKING QUERY:     " + query);
 		
 		try {
 			bookingService.updateBooking(query);
