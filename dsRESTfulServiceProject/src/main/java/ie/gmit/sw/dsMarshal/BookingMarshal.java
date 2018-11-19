@@ -16,14 +16,15 @@ import javax.xml.bind.JAXBException;
 //import javax.xml.bind.Unmarshaller;
 
 public class BookingMarshal {
-	
-	public BookingMarshal() {} // empty constructor
-	
-	protected String getBookingAsXML(Booking booking){
+
+	public BookingMarshal() {
+	} // empty constructor
+
+	protected String getBookingAsXML(Booking booking) {
 		// Marshal the Booking into XML
-    	StringWriter sw = new StringWriter();
+		StringWriter sw = new StringWriter();
 		Marshaller m;
-		
+
 		try {
 			JAXBContext jc = JAXBContext.newInstance("ie.gmit.sw.dsModels");
 			m = jc.createMarshaller();
@@ -33,16 +34,16 @@ public class BookingMarshal {
 			System.out.println("Problem marshalling booking");
 			e.printStackTrace();
 		}
-		
+
 		return sw.toString();
 	}// end getBookingAsXML
-	
+
 	protected Booking getBookingFromXML(String input) {
 		// Unmarshal the Booking from XML
 		StringReader sr1 = new StringReader(input);
 		Unmarshaller um1;
 		Booking bookingFromXml = null;
-		
+
 		try {
 			JAXBContext jc = JAXBContext.newInstance("ie.gmit.sw.dsModels");
 			um1 = jc.createUnmarshaller();
@@ -53,7 +54,7 @@ public class BookingMarshal {
 			System.out.println("Problem unmarshalling booking object");
 			e.printStackTrace();
 		}
-		
+
 		return bookingFromXml;
 	}
 
