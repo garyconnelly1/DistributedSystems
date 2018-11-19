@@ -1,6 +1,7 @@
 package ie.gmit.sw.dsRESTfulServiceProject;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -47,22 +48,28 @@ public class MyResource extends BookingMarshal {
 		Vehicle vehicle = new Vehicle();
 		int id = Integer.parseInt(value); // convert the value to an int
 		ReturnedBooking returnedBooking = controller.getBookingById(id);
-		System.out.println(returnedBooking.toString());
-		// construct the booking response object
-		booking.setBookingId(returnedBooking.getBookingId());
-		customer.setCustomerId(returnedBooking.getCustomerId());
-		vehicle.setId(returnedBooking.getVehicleId());
-		booking.setCustomer(customer);
-		booking.setVehicle(vehicle);
-		booking.setStartDate(returnedBooking.getStartDate());
-		booking.setEndDate(returnedBooking.getEndDate());
-		booking.setBookingNumber(null);
+		if(returnedBooking != null) {
+			System.out.println(returnedBooking.toString());
+			// construct the booking response object
+			booking.setBookingId(returnedBooking.getBookingId());
+			customer.setCustomerId(returnedBooking.getCustomerId());
+			vehicle.setId(returnedBooking.getVehicleId());
+			booking.setCustomer(customer);
+			booking.setVehicle(vehicle);
+			booking.setStartDate(returnedBooking.getStartDate());
+			booking.setEndDate(returnedBooking.getEndDate());
+			booking.setBookingNumber(null);
 
-		String msg = getBookingAsXML(booking);
+			String msg = getBookingAsXML(booking);
 
-		System.out.println(msg);
+			System.out.println(msg);
 
-		return Response.status(200).entity(msg).build();
+			return Response.status(200).entity(msg).build();
+		}
+		else {
+			return Response.status(404).entity("Resource doesn't exist").build();
+		}
+		
 
 	}
 
@@ -109,4 +116,22 @@ public class MyResource extends BookingMarshal {
 		return Response.ok().build();
 
 	}
+	
+	@DELETE
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("{id}")
+	public Response delete(@PathParam("id") final String id, String input) {
+		
+		int value = Integer.parseInt(id); // convert the value to an int
+		
+		ReturnedBooking returnedBooking = controller.getBookingById(value);
+		
+		if(returnedBooking != null) {
+			controller.deleteBooking(value);
+		}
+		
+		
+		return Response.ok().build();
+	}
+	
 }

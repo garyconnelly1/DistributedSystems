@@ -72,8 +72,14 @@ public class BookingController {
 			}
 
 		}
-
-		return resultBooking;
+		
+		if(resultBooking != null) {
+			return resultBooking;
+		}
+		else {
+			return null;
+		}
+		
 	}
 
 	public void createBooking(ReturnedBooking booking) {
@@ -101,6 +107,18 @@ public class BookingController {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void deleteBooking(int id) {
+		String query = "DELETE FROM bookings WHERE booking_id =" + id + ";";
+		
+		try {
+			bookingService.deleteBooking(query);
+		} catch (RemoteException e) {
+			System.out.println("error deleting booking in Booking controller");
+			e.printStackTrace();
+		}
+		
 	}
 
 }
