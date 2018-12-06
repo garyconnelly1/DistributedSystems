@@ -30,7 +30,7 @@ public class BookingController {
 
 	}
 
-	public String getAllBookings() {
+	public List<ReturnedBooking> getAllBookings() {
 		ResultSet resultSet = null;
 		List<ReturnedBooking> bookings = new ArrayList<ReturnedBooking>();
 		ReturnedBooking resultBooking;
@@ -52,7 +52,7 @@ public class BookingController {
 		System.out.println(resultBooking.getBookingId() + "//////////////////////////////////////////////"); // for
 																												// testing
 																												// purposes
-		return resultBooking.toString();
+		return bookings;
 	}
 
 	public ReturnedBooking getBookingById(int id) {

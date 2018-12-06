@@ -1,5 +1,8 @@
 package ie.gmit.sw.dsRESTfulServiceProject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,11 +35,27 @@ public class MyResource extends BookingMarshal {
 	 * @return String that will be returned as a text/plain response.
 	 */
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getIt() {
-		String returnStatement = controller.getAllBookings();
+	@Produces(MediaType.APPLICATION_XML)
+	public List<Booking> getIt() {
+		List<Booking> bookings = new ArrayList<Booking>();
+		Booking booking = new Booking();
+		Customer customer = new Customer();
+		Vehicle vehicle = new Vehicle();
+		List<ReturnedBooking> returnStatement = controller.getAllBookings();
 
-		return returnStatement;
+		for (ReturnedBooking rb : returnStatement) {
+			customer.setCustomerId(rb.getCustomerId());
+			vehicle.setId(rb.getVehicleId());
+			booking.setBookingId(rb.getBookingId());
+			booking.setCustomer(customer);
+			booking.setVehicle(vehicle);
+			booking.setStartDate(rb.getStartDate());
+			booking.setEndDate(rb.getEndDate());
+
+			bookings.add(booking);
+		}
+
+		return bookings;
 	}
 
 	@GET
@@ -48,7 +67,7 @@ public class MyResource extends BookingMarshal {
 		Vehicle vehicle = new Vehicle();
 		int id = Integer.parseInt(value); // convert the value to an int
 		ReturnedBooking returnedBooking = controller.getBookingById(id);
-		if(returnedBooking != null) {
+		if (returnedBooking != null) {
 			System.out.println(returnedBooking.toString());
 			// construct the booking response object
 			booking.setBookingId(returnedBooking.getBookingId());
@@ -65,11 +84,9 @@ public class MyResource extends BookingMarshal {
 			System.out.println(msg);
 
 			return Response.status(200).entity(msg).build();
-		}
-		else {
+		} else {
 			return Response.status(404).entity("Resource doesn't exist").build();
 		}
-		
 
 	}
 
@@ -116,22 +133,21 @@ public class MyResource extends BookingMarshal {
 		return Response.ok().build();
 
 	}
-	
+
 	@DELETE
 	@Consumes(MediaType.APPLICATION_XML)
 	@Path("{id}")
 	public Response delete(@PathParam("id") final String id, String input) {
-		
+
 		int value = Integer.parseInt(id); // convert the value to an int
-		
+
 		ReturnedBooking returnedBooking = controller.getBookingById(value);
-		
-		if(returnedBooking != null) {
+
+		if (returnedBooking != null) {
 			controller.deleteBooking(value);
 		}
-		
-		
+
 		return Response.ok().build();
 	}
-	
+
 }
