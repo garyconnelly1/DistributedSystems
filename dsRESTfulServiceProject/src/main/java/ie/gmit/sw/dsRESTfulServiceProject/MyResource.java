@@ -3,15 +3,7 @@ package ie.gmit.sw.dsRESTfulServiceProject;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ie.gmit.sw.ds.dsRMI_DataAccess.ReturnedBooking;
@@ -24,18 +16,18 @@ import ie.gmit.sw.dsModels.Vehicle;
 /**
  * Root resource (exposed at "myresource" path)
  */
+
+/**
+ * Method handling HTTP GET requests. The returned object will be sent to the
+ * client as "text/plain" media type.
+ *
+ * @return String that will be returned as a text/plain response.
+ */
 @Path("bookings")
-public class MyResource extends BookingMarshal {
+public class MyResource extends BookingMarshal implements Resource {
 	BookingController controller = new BookingController();
 
-	/**
-	 * Method handling HTTP GET requests. The returned object will be sent to the
-	 * client as "text/plain" media type.
-	 *
-	 * @return String that will be returned as a text/plain response.
-	 */
-	@GET
-	@Produces(MediaType.APPLICATION_XML)
+	@Override
 	public List<Booking> getIt() {
 		List<Booking> bookings = new ArrayList<Booking>();
 		Booking booking = new Booking();
@@ -58,10 +50,8 @@ public class MyResource extends BookingMarshal {
 		return bookings;
 	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_XML)
-	@Path("/{value}")
-	public Response getById(@PathParam("value") String value) {
+	@Override
+	public Response getById(String value) {
 		Booking booking = new Booking();
 		Customer customer = new Customer();
 		Vehicle vehicle = new Vehicle();
@@ -90,8 +80,7 @@ public class MyResource extends BookingMarshal {
 
 	}
 
-	@POST
-	@Consumes(MediaType.APPLICATION_XML)
+	@Override
 	public Response create(String input) {
 		System.out.println(input);
 
@@ -112,10 +101,8 @@ public class MyResource extends BookingMarshal {
 		return Response.ok().build();
 	}
 
-	@PUT
-	@Consumes(MediaType.APPLICATION_XML)
-	@Path("{id}")
-	public Response update(@PathParam("id") final String id, String input) {
+	@Override
+	public Response update(String id, String input) {
 		Booking booking = getBookingFromXML(input);
 		Customer customer = booking.getCustomer();
 		Vehicle vehicle = booking.getVehicle();
@@ -131,14 +118,10 @@ public class MyResource extends BookingMarshal {
 		controller.updateBooking(returnedBooking);
 
 		return Response.ok().build();
-
 	}
 
-	@DELETE
-	@Consumes(MediaType.APPLICATION_XML)
-	@Path("{id}")
-	public Response delete(@PathParam("id") final String id, String input) {
-
+	@Override
+	public Response delete(String id, String input) {
 		int value = Integer.parseInt(id); // convert the value to an int
 
 		ReturnedBooking returnedBooking = controller.getBookingById(value);
