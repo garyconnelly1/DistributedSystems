@@ -1,0 +1,73 @@
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gmit="http://sw.gmit.ie/dsModels/" targetNamespace="http://sw.gmit.ie/dsModels/" elementFormDefault="qualified">
+<xsd:element name='comment' type='xsd:string'/>
+
+<xsd:element name='booking' type='gmit:Booking'/>
+
+<xsd:simpleType name="BookingNumber">
+	<xsd:restriction base="xsd:string">
+		<xsd:pattern value="[0-9]{5}(-[A-Z]{4})?" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="BookingId">
+	<xsd:restriction base="xsd:int">
+		<xsd:pattern value="[0-9]{5}(-[A-Z]{4})?" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+	<xsd:simpleType name='SKU'>
+		<xsd:restriction base='xsd:string'>
+			<xsd:pattern value='\d{3}\w{3}' />
+		</xsd:restriction>
+	</xsd:simpleType>
+<!-- Customer schema -->
+	<xsd:complexType name='Customer'>
+		<xsd:annotation>
+			<xsd:documentation>
+				Purchase order schema example.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='customerId' type='xsd:int' />
+			<xsd:element name='firstName' type='xsd:string' />
+			<xsd:element name='lastName' type='xsd:string' />
+			<xsd:element name='age' type='xsd:int' />
+			<xsd:element name='county' type='xsd:string' />
+			 <xsd:element name='dateOfBirth' type='xsd:string'/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Vehicle schema -->
+	<xsd:complexType name='Vehicle'>
+		<xsd:annotation>
+			<xsd:documentation>
+				Purchase order schema example.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+		    <xsd:element name='id' type='xsd:int' />
+			<xsd:element name='type' type='xsd:string' />
+			 <xsd:element name='year' type='xsd:string'/>
+			<xsd:element name='colour' type='xsd:string' />
+			<xsd:element name='engine' type='xsd:float' />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- Booking schema -->
+	<xsd:complexType name='Booking'>
+	
+	<xsd:sequence>
+      <xsd:element name='vehicle' type='gmit:Vehicle'/>
+      <xsd:element name='customer' type='gmit:Customer'/>
+    </xsd:sequence>
+	<xsd:attribute name='bookingNumber' type='gmit:BookingNumber' use='required'/>
+    <xsd:attribute name='startDate' type='xsd:string' use='required'/>
+    <xsd:attribute name='endDate' type='xsd:string' use='required'/>
+    <xsd:attribute name='bookingId' type='gmit:BookingId' use='required'/>
+    
+	</xsd:complexType>
+	
+	
+
+</xsd:schema>
