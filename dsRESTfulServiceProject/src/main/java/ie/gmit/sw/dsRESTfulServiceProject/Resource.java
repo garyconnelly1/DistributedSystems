@@ -19,7 +19,7 @@ public interface Resource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
-	public List<Booking> getIt();
+	public Response getIt();
 
 	@GET
 	@Produces(MediaType.APPLICATION_XML)

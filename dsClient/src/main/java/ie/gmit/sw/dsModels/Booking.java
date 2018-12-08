@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
     "vehicle",
     "customer"
 })
-@XmlRootElement
+//@XmlRootElement
 public class Booking {
 
     @XmlElement(namespace = "http://sw.gmit.ie/dsModels/", required = true)

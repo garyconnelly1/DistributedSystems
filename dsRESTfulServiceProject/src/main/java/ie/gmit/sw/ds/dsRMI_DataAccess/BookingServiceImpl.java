@@ -45,7 +45,7 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 		String strSelect = "select * from bookings";
 		ResultSet rset = null;
 		ArrayList<ResultSet> resultSetSerialized = new ArrayList<ResultSet>();
-		ReturnedBooking booking = new ReturnedBooking();
+		
 		List<ReturnedBooking> bookings = new ArrayList<ReturnedBooking>();
 
 		try {
@@ -56,6 +56,7 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 
 		try {
 			while (rset.next()) {
+				ReturnedBooking booking = new ReturnedBooking();
 				booking.setBookingId(rset.getInt("booking_id"));
 				booking.setVehicleId(rset.getInt("vehicle_id"));
 				booking.setCustomerId(rset.getInt("customer_id"));
@@ -68,6 +69,8 @@ public class BookingServiceImpl extends UnicastRemoteObject implements IBookingS
 
 			e.printStackTrace();
 		}
+		
+		
 
 		return bookings;
 	}

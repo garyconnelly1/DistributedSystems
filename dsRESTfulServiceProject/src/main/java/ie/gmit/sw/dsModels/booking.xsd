@@ -3,6 +3,7 @@
 <xsd:element name='comment' type='xsd:string'/>
 
 <xsd:element name='booking' type='gmit:Booking'/>
+<xsd:element name='bookings' type='gmit:Bookings'/>
 
 <xsd:simpleType name="BookingNumber">
 	<xsd:restriction base="xsd:string">
@@ -66,6 +67,13 @@
     <xsd:attribute name='endDate' type='xsd:string' use='required'/>
     <xsd:attribute name='bookingId' type='gmit:BookingId' use='required'/>
     
+	</xsd:complexType>
+	
+	<xsd:complexType name='Bookings'>
+		<xsd:sequence>
+			<xsd:element name='booking' minOccurs='0'
+				maxOccurs='unbounded' type='gmit:Booking'/>
+		</xsd:sequence>
 	</xsd:complexType>
 	
 	

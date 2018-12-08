@@ -21,7 +21,7 @@ public class BookingMarshal {
 	public BookingMarshal() {
 	} // empty constructor
 
-	protected String getBookingAsXML(Booking booking) {
+	protected static String getBookingAsXML(Booking booking) {
 		// Marshal the Booking into XML
 		StringWriter sw = new StringWriter();
 		Marshaller m;
@@ -39,7 +39,7 @@ public class BookingMarshal {
 		return sw.toString();
 	}// end getBookingAsXML
 
-	protected Booking getBookingFromXML(String input) {
+	protected static Booking getBookingFromXML(String input) {
 		// Unmarshal the Booking from XML
 		StringReader sr1 = new StringReader(input);
 		Unmarshaller um1;
@@ -59,22 +59,24 @@ public class BookingMarshal {
 		return bookingFromXml;
 	}
 	
-	protected static String getBookingsAsXML(Bookings bookings) {
-		// Marshal the Booking into XML
-		StringWriter sw = new StringWriter();
-		Marshaller m;
+	protected static Bookings getBookingsFromXML(String input) {
+		// Unmarshal the Booking from XML
+		StringReader sr1 = new StringReader(input);
+		Unmarshaller um1;
+		Bookings bookingsFromXml = null;
 
 		try {
 			JAXBContext jc = JAXBContext.newInstance(Bookings.class);
-			m = jc.createMarshaller();
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			m.marshal(bookings, sw);
+			um1 = jc.createUnmarshaller();
+			StreamSource source1 = new StreamSource(sr1);
+			JAXBElement<Bookings> bookingElement1 = um1.unmarshal(source1, Bookings.class);
+			bookingsFromXml = (Bookings) bookingElement1.getValue();
 		} catch (JAXBException e) {
-			System.out.println("Problem marshalling booking");
+			System.out.println("Problem unmarshalling booking object");
 			e.printStackTrace();
 		}
 
-		return sw.toString();
-	}// end getBookingAsXML
+		return bookingsFromXml;
+	}
 
 }

@@ -10,6 +10,7 @@ import ie.gmit.sw.ds.dsRMI_DataAccess.ReturnedBooking;
 import ie.gmit.sw.dsControllers.BookingController;
 import ie.gmit.sw.dsMarshal.BookingMarshal;
 import ie.gmit.sw.dsModels.Booking;
+import ie.gmit.sw.dsModels.Bookings;
 import ie.gmit.sw.dsModels.Customer;
 import ie.gmit.sw.dsModels.Vehicle;
 
@@ -28,14 +29,16 @@ public class MyResource extends BookingMarshal implements Resource {
 	BookingController controller = new BookingController();
 
 	@Override
-	public List<Booking> getIt() {
+	public Response getIt() {
 		List<Booking> bookings = new ArrayList<Booking>();
-		Booking booking = new Booking();
-		Customer customer = new Customer();
-		Vehicle vehicle = new Vehicle();
+		
 		List<ReturnedBooking> returnStatement = controller.getAllBookings();
 
 		for (ReturnedBooking rb : returnStatement) {
+			Booking booking = new Booking();
+			Customer customer = new Customer();
+			Vehicle vehicle = new Vehicle();
+			System.out.println(rb.getBookingId());
 			customer.setCustomerId(rb.getCustomerId());
 			vehicle.setId(rb.getVehicleId());
 			booking.setBookingId(rb.getBookingId());
@@ -46,8 +49,13 @@ public class MyResource extends BookingMarshal implements Resource {
 
 			bookings.add(booking);
 		}
+		
+		Bookings bookingList = new Bookings(); ////////////////////////
+		bookingList.setBooking(bookings); ////////////////////////////
+		String msg = getBookingsAsXML(bookingList);//////////////////////////////////
 
-		return bookings;
+		//return bookings;
+		return Response.status(200).entity(msg).build();
 	}
 
 	@Override
