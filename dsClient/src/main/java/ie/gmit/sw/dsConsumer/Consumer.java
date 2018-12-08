@@ -59,7 +59,7 @@ public class Consumer extends BookingMarshal{
 		
 		////////////////////////////////////////////
 		// Trying to do a POST with a booking object
-		target = client.target(base + "/1");
+		target = client.target(base + "/1"); // Set the base to base + id because first we need to do a get on a single resource.
 		xmlResponse = target.request(MediaType.APPLICATION_XML).get(String.class);
 		Booking newBooking = getBookingFromXML(xmlResponse);
 		System.out.println("SINGLE BOOKING UNMARSHALLED");
@@ -69,7 +69,7 @@ public class Consumer extends BookingMarshal{
 		
 		System.out.println(newBooking.getBookingId());
 		
-		Customer customer = new Customer();
+		Customer customer = new Customer();  // Create a new booking object to post to the server.
 		Vehicle vehicle = new Vehicle();
 		Booking booking = new Booking();
 		
@@ -84,18 +84,37 @@ public class Consumer extends BookingMarshal{
 		
 		
 		
-		target = client.target(base);
+		target = client.target(base); // Reset the target back to base.
 		
-		String send = getBookingAsXML(booking);
+		String send = getBookingAsXML(booking); // Convert the booking object to xml.
 		
-		System.out.println(send);
+		System.out.println(send); // Output the marshaled object before sending.
 		
-		//System.out.println(send);
-		
-		Response response = target.request().post(Entity.xml(send));
+		Response response = target.request().post(Entity.xml(send)); // Execute the POST method.
 		
 		System.out.println("=====================================================");
-		System.out.println(response);
+		System.out.println(response); // Read the response.
+		System.out.println("=====================================================");
+		
+		
+		////////////////////////////////////////////
+		// Trying to do a PUT with a booking object
+		target = client.target(base + "/10"); // Reset the target to the ID of the resource we want to update(10).
+		Customer customer2 = new Customer(); // Update some booking details.
+		customer2.setCustomerId(11);
+		Vehicle vehicle2 = new Vehicle();
+		vehicle2.setId(11);
+		booking.setCustomer(customer2);
+		booking.setVehicle(vehicle2);
+		
+		send = getBookingAsXML(booking); // Convert the updated booking object to xml.
+		
+		System.out.println(send); // Output the marshaled object before sending.
+		
+		response = target.request().put(Entity.xml(send)); // Execute the PUT method.
+		
+		System.out.println("=====================================================");
+		System.out.println(response); // Read the response.
 		System.out.println("=====================================================");
 		
 		
