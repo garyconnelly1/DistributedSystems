@@ -114,8 +114,19 @@ public class Consumer extends BookingMarshal{
 		response = target.request().put(Entity.xml(send)); // Execute the PUT method.
 		
 		System.out.println("=====================================================");
+		System.out.println("UPDATED:");
 		System.out.println(response); // Read the response.
 		System.out.println("=====================================================");
+		
+		////////////////////////////////////////////
+		// Trying to do a DELETE with a booking object
+		response = target.request().delete();
+		
+		System.out.println("=====================================================");
+		System.out.println("DELETED:");
+		System.out.println(response); // Read the response.
+		System.out.println("=====================================================");
+		
 		
 		
 		
