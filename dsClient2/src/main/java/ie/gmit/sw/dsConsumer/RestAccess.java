@@ -71,6 +71,14 @@ public class RestAccess extends BookingMarshal {
 		response = target.request().post(Entity.xml(send));
 		
 		System.out.println(response); // Read the response.
+	}
+	
+	public void deleteBooking(int id) {
+		target = client.target(base + "/" + id);
+		
+		response = target.request().delete();
+		
+		System.out.println(response); // Read the response.
 		
 	}
 

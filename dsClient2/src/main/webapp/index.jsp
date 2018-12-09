@@ -15,6 +15,9 @@
      <form action = "CreateBooking.jsp">
      <button type="submit" value="submit" class="btn btn-primary">Create New Booking</button>
     </form>
+    <form action = "DeleteBooking.jsp">
+     <button type="submit" value="submit" class="btn btn-primary">Delete Booking</button>
+    </form>
     
 </body>
 </html>

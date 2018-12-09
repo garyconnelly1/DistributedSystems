@@ -57,7 +57,7 @@ table, th, td {
 					<td>${booking.getEndDate()}</td>
 					<td><form method="post" action = "EditBooking.jsp">
 					<input type ="text" name="id" value="${booking.getBookingId()}">
-					<input type ="submit" value="Edit">
+					<input type ="submit" class="btn btn-primary" value="Edit">
 					</form></td>
 				</tr>
 			</c:forEach>

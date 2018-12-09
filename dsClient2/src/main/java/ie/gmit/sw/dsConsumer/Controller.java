@@ -31,5 +31,9 @@ public class Controller {
 	public void createBooking(Booking booking) {
 		access.createBooking(booking);
 	}
+	
+	public void Delete(int id) {
+		access.deleteBooking(id);
+	}
 
 }
