@@ -7,10 +7,13 @@
   <title>Booking System</title>
 </head>
 <body>
-    <h2>Client 2</h2>
+    <h2>Distributed Systems Project</h2>
     
      <form action = "ShowBookings.jsp">
-     <button type="submit" value="submit" class="btn btn-primary">View all bookings.</button>
+     <button type="submit" value="submit" class="btn btn-primary">View/Edit Bookings</button>
+    </form>
+     <form action = "CreateBooking.jsp">
+     <button type="submit" value="submit" class="btn btn-primary">Create New Booking</button>
     </form>
     
 </body>

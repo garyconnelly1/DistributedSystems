@@ -62,5 +62,16 @@ public class RestAccess extends BookingMarshal {
 		System.out.println(response); // Read the response.
 		
 	}
+	
+	public void createBooking(Booking booking) {
+		target = client.target(base);
+		
+		send = getBookingAsXML(booking); // Convert the updated booking object to xml.
+		
+		response = target.request().post(Entity.xml(send));
+		
+		System.out.println(response); // Read the response.
+		
+	}
 
 }

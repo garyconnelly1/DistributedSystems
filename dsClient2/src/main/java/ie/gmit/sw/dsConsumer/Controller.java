@@ -27,5 +27,9 @@ public class Controller {
 	public void updateBooking(Booking booking) {
 		access.updateBooking(booking);
 	}
+	
+	public void createBooking(Booking booking) {
+		access.createBooking(booking);
+	}
 
 }
