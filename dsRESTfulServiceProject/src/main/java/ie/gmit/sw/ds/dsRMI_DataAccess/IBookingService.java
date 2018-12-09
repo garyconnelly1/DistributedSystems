@@ -2,13 +2,11 @@ package ie.gmit.sw.ds.dsRMI_DataAccess;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 
 
-public interface IBookingService  extends Remote{
+public interface IBookingService  extends Remote{ // This is the interface between the remote object and the client stub.
 	
 	public void createBooking(String query) throws RemoteException; // to create a booking
 	

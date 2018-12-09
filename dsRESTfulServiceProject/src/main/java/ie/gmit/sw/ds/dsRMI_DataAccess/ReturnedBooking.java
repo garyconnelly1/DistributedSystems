@@ -2,8 +2,8 @@ package ie.gmit.sw.ds.dsRMI_DataAccess;
 
 import java.io.Serializable;
 
-public class ReturnedBooking implements Serializable{
-	
+public class ReturnedBooking implements Serializable{ // This is a booking pojo that has the same make-up as the booking object in the database table.
+	// This objetc will be used to map to the Booking object that can be marshalled to xml.
 	private static final long serialVersionUID = 1190476516911661470L;
 	private int bookingId;
 	private int vehicleId;
@@ -11,11 +11,11 @@ public class ReturnedBooking implements Serializable{
 	private String startDate;
 	private String endDate;
 	
-	public ReturnedBooking() {
+	public ReturnedBooking() { // Create empty constructor.
 		
 	}
 	
-	public ReturnedBooking(int bookingId, int vehicleId, int customerId, String startDate, String endDate) {
+	public ReturnedBooking(int bookingId, int vehicleId, int customerId, String startDate, String endDate) { // Create populated constructor.
 		super();
 		this.bookingId = bookingId;
 		this.vehicleId = vehicleId;
@@ -24,6 +24,8 @@ public class ReturnedBooking implements Serializable{
 		this.endDate = endDate;
 	}
 
+	// Getter and setter methods.
+	
 	public int getBookingId() {
 		return bookingId;
 	}
@@ -65,7 +67,7 @@ public class ReturnedBooking implements Serializable{
 	}
 
 	@Override
-	public String toString() {
+	public String toString() { // ToString method to be used for debbugging.
 		return "Booking [bookingId=" + bookingId + ", vehicleId=" + vehicleId + ", customerId=" + customerId
 				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}

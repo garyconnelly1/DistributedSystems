@@ -24,17 +24,23 @@ import ie.gmit.sw.dsModels.Vehicle;
  *
  * @return String that will be returned as a text/plain response.
  */
-@Path("bookings")
+@Path("bookings") // When the client makes a call to the bookings resource
 public class MyResource extends BookingMarshal implements Resource {
-	BookingController controller = new BookingController();
+	
+	BookingController controller = new BookingController(); // Initialize the controller.
 
 	@Override
-	public Response getIt() {
-		List<Booking> bookings = new ArrayList<Booking>();
+	public Response getIt() { // Method to return all bookings.
+		List<Booking> bookings = new ArrayList<Booking>(); // Initialize a list of booking objects.
 		
-		List<ReturnedBooking> returnStatement = controller.getAllBookings();
+		List<ReturnedBooking> returnStatement = controller.getAllBookings(); // Get a list of ReturnedBooking objects from the controller.
 
-		for (ReturnedBooking rb : returnStatement) {
+		/*
+		 * For each ReturnedBooking object in the list, map all the relevant elements a new instance of
+		 * the Booking model class which can be sent over the network.
+		 * 
+		 */
+		for (ReturnedBooking rb : returnStatement) { 
 			Booking booking = new Booking();
 			Customer customer = new Customer();
 			Vehicle vehicle = new Vehicle();
@@ -50,24 +56,27 @@ public class MyResource extends BookingMarshal implements Resource {
 			bookings.add(booking);
 		}
 		
-		Bookings bookingList = new Bookings(); ////////////////////////
-		bookingList.setBooking(bookings); ////////////////////////////
-		String msg = getBookingsAsXML(bookingList);//////////////////////////////////
+		Bookings bookingList = new Bookings(); // Initialize the bookings object to contain a list of booking objects.
+		bookingList.setBooking(bookings); // Set the bookings to the list we just created.
+		String msg = getBookingsAsXML(bookingList); // Marshal this list so it can be sent via HTTP.
 
-		//return bookings;
-		return Response.status(200).entity(msg).build();
+		return Response.status(200).entity(msg).build(); // Return the xml with a status 200 server message.
 	}
 
 	@Override
-	public Response getById(String value) {
-		Booking booking = new Booking();
-		Customer customer = new Customer();
-		Vehicle vehicle = new Vehicle();
-		int id = Integer.parseInt(value); // convert the value to an int
-		ReturnedBooking returnedBooking = controller.getBookingById(id);
-		if (returnedBooking != null) {
-			System.out.println(returnedBooking.toString());
-			// construct the booking response object
+	public Response getById(String value) { // Method to return 1 booking.
+		Booking booking = new Booking(); // Initialize a booking object.
+		Customer customer = new Customer(); // Initialize a customer object.
+		Vehicle vehicle = new Vehicle(); // Initialize a vehicle object.
+		
+		int id = Integer.parseInt(value); // Convert the value parameter to an integer.
+		ReturnedBooking returnedBooking = controller.getBookingById(id); // Find the booking with that id.
+		if (returnedBooking != null) { // If it exists in the database.
+			
+			/*
+			 * Map it to the booking model object that can be sent over a network.
+			 */
+			
 			booking.setBookingId(returnedBooking.getBookingId());
 			customer.setCustomerId(returnedBooking.getCustomerId());
 			vehicle.setId(returnedBooking.getVehicleId());
@@ -77,49 +86,49 @@ public class MyResource extends BookingMarshal implements Resource {
 			booking.setEndDate(returnedBooking.getEndDate());
 			booking.setBookingNumber(null);
 
-			String msg = getBookingAsXML(booking);
+			String msg = getBookingAsXML(booking); // Marshal the object to xml.
 
-			System.out.println(msg);
-
-			return Response.status(200).entity(msg).build();
+			return Response.status(200).entity(msg).build(); // Return the xml with a status 200 server message.
 		} else {
-			return Response.status(404).entity("Resource doesn't exist").build();
+			return Response.status(404).entity("Resource doesn't exist").build(); // Return a 404 because the resource does not exist.
 		}
 
 	}
 
 	@Override
-	public Response create(String input) {
-		System.out.println(input);
-
-		Booking booking = getBookingFromXML(input);
+	public Response create(String input) { // When the client wants to create a new booking object.
+		
+		Booking booking = getBookingFromXML(input); // Unmarshal the xml input to a booking object.
 		ReturnedBooking returnedBooking = new ReturnedBooking();
 		Customer customer = booking.getCustomer();
 		Vehicle vehicle = booking.getVehicle();
 
-		// construct the returnedBooking object
+		/*
+		 * Map it to a ReturnedBooking object so it can be sent to the database.
+		 */
 		returnedBooking.setBookingId(booking.getBookingId());
 		returnedBooking.setCustomerId(customer.getCustomerId());
 		returnedBooking.setVehicleId(vehicle.getId());
 		returnedBooking.setEndDate(booking.getEndDate());
 		returnedBooking.setStartDate(booking.getStartDate());
 
-		controller.createBooking(returnedBooking);
+		controller.createBooking(returnedBooking); // Pass that object to the controller.
 
-		return Response.ok().build();
+		return Response.ok().build(); // Return a status 200 server message.
 	}
 
 	@Override
-	public Response update(String id, String input) {
+	public Response update(String id, String input) { // When the client wants to update a booking in the database.
 		
-		System.out.println("LOOK HERE ");
-		System.out.println(input);
-		Booking booking = getBookingFromXML(input);
+		Booking booking = getBookingFromXML(input); // Unmarshal the xml to a booking objetc.
 		Customer customer = booking.getCustomer();
 		Vehicle vehicle = booking.getVehicle();
-		int value = Integer.parseInt(id); // convert the value to an int
-		ReturnedBooking returnedBooking = controller.getBookingById(value); // find the booking object that we need to
-																			// update
+		int value = Integer.parseInt(id); // Convert the value to an integer.
+		ReturnedBooking returnedBooking = controller.getBookingById(value); // Find the booking object that we need to update.
+												
+		/*
+		 * Map it to a ReturnedBooking object so it can be sent to the database.
+		 */
 		returnedBooking.setBookingId(booking.getBookingId());
 		returnedBooking.setCustomerId(customer.getCustomerId());
 		System.out.println("PRINTING IDs.");
@@ -129,22 +138,22 @@ public class MyResource extends BookingMarshal implements Resource {
 		returnedBooking.setStartDate(booking.getStartDate());
 		returnedBooking.setEndDate(booking.getEndDate());
 
-		controller.updateBooking(returnedBooking);
+		controller.updateBooking(returnedBooking); // Pass that object to the controller.
 
-		return Response.ok().build();
+		return Response.ok().build(); // Return a status 200 server message.
 	}
 
 	@Override
-	public Response delete(String id, String input) {
-		int value = Integer.parseInt(id); // convert the value to an int
+	public Response delete(String id, String input) { // When the client wants to delete a booking object from the database.
+		int value = Integer.parseInt(id); // Convert the value to an integer.
 
-		ReturnedBooking returnedBooking = controller.getBookingById(value);
+		ReturnedBooking returnedBooking = controller.getBookingById(value); // Find the object we want to delete.
 
-		if (returnedBooking != null) {
-			controller.deleteBooking(value);
+		if (returnedBooking != null) { // If the object exists.
+			controller.deleteBooking(value); // Delete that object.
 		}
 
-		return Response.ok().build();
+		return Response.ok().build(); // Return a status 200 server message.
 	}
 
 }

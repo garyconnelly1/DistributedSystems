@@ -1,6 +1,6 @@
 package ie.gmit.sw.dsRESTfulServiceProject;
 
-import java.util.List;
+
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,9 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import ie.gmit.sw.dsModels.Booking;
-
-public interface Resource {
+public interface Resource { 
+	
+	/*
+	 * An interface to abstract the business logic from the RESTful annotations.
+	 * The RESTful resources will implement this interface and process the requests.
+	 */
 
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
