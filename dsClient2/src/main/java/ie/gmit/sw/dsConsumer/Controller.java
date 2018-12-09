@@ -5,22 +5,23 @@ import java.util.List;
 import ie.gmit.sw.dsModels.Booking;
 
 public class Controller {
-	
+
 	public Controller() {
-		
+
 	}
-	
-private List<Booking> bookingList;
-	
+
 	RestAccess access = new RestAccess();
 
-	public List<Booking> getBookings(){
+	private List<Booking> bookingList;
+
+	public List<Booking> getBookings() {
 		bookingList = access.getBookings();
 		return bookingList;
 	}
-	
-	public String sayHello() {
-		return "Hello user";
+
+	public Booking getBookingId(int id) {
+		Booking booking = access.getBookingById(id);
+		return booking;
 	}
 
 }

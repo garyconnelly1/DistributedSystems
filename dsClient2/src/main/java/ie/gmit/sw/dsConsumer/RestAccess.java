@@ -19,12 +19,14 @@ public class RestAccess extends BookingMarshal {
 
 	private // 2. Set a target for the client.
 	WebTarget target = client.target(base);
+	
+	private String xmlResponse;
 
 	public List<Booking> getBookings() {
 
 		// 3. Get response from web service.
 
-		String xmlResponse = target.request(MediaType.APPLICATION_XML).get(String.class);
+		xmlResponse = target.request(MediaType.APPLICATION_XML).get(String.class);
 		
 		Bookings bookings = getBookingsFromXML(xmlResponse);
 		
@@ -34,6 +36,14 @@ public class RestAccess extends BookingMarshal {
 
 		return bookingList;
 
+	}
+	
+	public Booking getBookingById(int id) {
+		target = client.target(base + "/" + id);
+		xmlResponse = target.request(MediaType.APPLICATION_XML).get(String.class);
+		Booking newBooking = getBookingFromXML(xmlResponse);
+		return newBooking;
+		
 	}
 
 }

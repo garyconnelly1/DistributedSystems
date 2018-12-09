@@ -24,7 +24,7 @@ table, th, td {
 
 <%
 	Controller controller = new Controller();
-	String s = controller.sayHello();
+	
 	
 	List<Booking> bookings = controller.getBookings();
 %>
