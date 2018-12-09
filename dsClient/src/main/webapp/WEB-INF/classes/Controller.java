@@ -5,16 +5,17 @@ import ie.gmit.sw.dsModels.Booking;
 
 public class Controller {
 	
-	private List<Booking> bookingList;
+	private static List<Booking> bookingList;
 	
-	RestAccess access = new RestAccess();
+	static RestAccess access = new RestAccess();
 
-	public List<Booking> getBookings(){
+	public static List<Booking> getBookings(){
 		bookingList = access.getBookings();
 		return bookingList;
 	}
 	
 	public String sayHello() {
+		System.out.println("Inside sat hello method.");
 		return "hello";
 	}
 
