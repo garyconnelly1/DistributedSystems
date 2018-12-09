@@ -28,7 +28,6 @@ table, th, td {
 	<%
 		Controller controller = new Controller();
 	
-	
 		List<Booking> bookings = controller.getBookings();
 	%>
 	<h2>Show All Bookings</h2>
