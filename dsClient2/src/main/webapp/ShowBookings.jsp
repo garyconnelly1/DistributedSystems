@@ -50,12 +50,15 @@ table, th, td {
 		<tbody>
 			<c:forEach items="<%=bookings %>" var="booking">
 				<tr>
-					<td>${booking.getBookingId()}</td>
+					<td id ="bookingid">${booking.getBookingId()}</td>
 					<td>${booking.getCustomer().getCustomerId()}</td>
 					<td>${booking.getVehicle().getId()}</td>
 					<td>${booking.getStartDate()}</td>
 					<td>${booking.getEndDate()}</td>
-					<td>Edit</td>
+					<td><form method="post" action = "EditBooking.jsp">
+					<input type ="text" name="id" value="${booking.getBookingId()}">
+					<input type ="submit" value="Edit">
+					</form></td>
 				</tr>
 			</c:forEach>
 			
