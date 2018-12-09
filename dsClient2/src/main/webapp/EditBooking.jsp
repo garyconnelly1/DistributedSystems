@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-      <%@page import="ie.gmit.sw.dsConsumer.Controller"%>
-     <%@page import="ie.gmit.sw.dsModels.Booking"%>
+	pageEncoding="ISO-8859-1"%>
+<%@page import="ie.gmit.sw.dsConsumer.Controller"%>
+<%@page import="ie.gmit.sw.dsModels.Booking"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,21 +15,26 @@ Controller controller = new Controller();
 Booking booking = controller.getBookingId(id);
 %>
 
-<h1>Edit booking</h1>
+	<h1>
+		Edit booking Where ID is
+		<%=booking.getBookingId() %></h1>
 
-<p>
-<%=booking.getBookingId() %>
-</p>
-<br>
+	<form method="post" action="UpdatedBooking.jsp">
+		Booking ID:<br>
+		<input type="text" name="booking_id" value="<%=booking.getBookingId() %>"><br>
+		Customer ID:<br>
+		<input type="text" name="customer_id" value="<%=booking.getCustomer().getCustomerId() %>"><br>
+		Vehicle ID:<br>
+		<input type="text" name="vehicle_id" value="<%=booking.getVehicle().getId() %>"><br>
+		Start Date:<br>
+		<input type="text" name="start_date" value="<%=booking.getStartDate() %>"><br>
+		End Date:<br>
+		<input type="text" name="end_date" value="<%=booking.getEndDate() %>"><br>
+		
+		<input type="submit" value="Update">
+	</form>
 
-<p>
-<%=booking.getStartDate() %>
-</p>
-
-<p>
-<%=booking.getEndDate() %>
-</p>
-
+	
 
 </body>
 </html>

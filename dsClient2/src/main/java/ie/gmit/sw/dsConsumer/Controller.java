@@ -23,5 +23,9 @@ public class Controller {
 		Booking booking = access.getBookingById(id);
 		return booking;
 	}
+	
+	public void updateBooking(Booking booking) {
+		access.updateBooking(booking);
+	}
 
 }

@@ -111,6 +111,9 @@ public class MyResource extends BookingMarshal implements Resource {
 
 	@Override
 	public Response update(String id, String input) {
+		
+		System.out.println("LOOK HERE ");
+		System.out.println(input);
 		Booking booking = getBookingFromXML(input);
 		Customer customer = booking.getCustomer();
 		Vehicle vehicle = booking.getVehicle();
@@ -119,6 +122,9 @@ public class MyResource extends BookingMarshal implements Resource {
 																			// update
 		returnedBooking.setBookingId(booking.getBookingId());
 		returnedBooking.setCustomerId(customer.getCustomerId());
+		System.out.println("PRINTING IDs.");
+		System.out.println(customer.getCustomerId());
+		System.out.println(vehicle.getId());
 		returnedBooking.setVehicleId(vehicle.getId());
 		returnedBooking.setStartDate(booking.getStartDate());
 		returnedBooking.setEndDate(booking.getEndDate());
