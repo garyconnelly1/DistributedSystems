@@ -13,70 +13,68 @@ import ie.gmit.sw.dsMarshal.BookingMarshal;
 import ie.gmit.sw.dsModels.Booking;
 import ie.gmit.sw.dsModels.Bookings;
 
-public class RestAccess extends BookingMarshal {
+public class RestAccess extends BookingMarshal { // This is the class that is responsible for interacting with the REST API. 
 
-	private String base = "http://localhost:8080/dsRESTfulServiceProject/webapi/bookings";
-	// 1. Create a client.
-	private Client client = ClientBuilder.newClient(); // Factory class.
-
-	private // 2. Set a target for the client.
-	WebTarget target = client.target(base);
+	private String base = "http://localhost:8080/dsRESTfulServiceProject/webapi/bookings"; // The base URI for the api.
 	
-	private String xmlResponse;
+	private Client client = ClientBuilder.newClient(); // Factory class to create a client object.
+
+	private WebTarget target = client.target(base); // Set a target for the client.
 	
-	private String send;
+	private String xmlResponse; // Set an xml response variable.
 	
-	Response response;
+	private String send; // Set a variable that will be used to send xml objects over the database.
+	
+	Response response; // Set a response object.
 
-	public List<Booking> getBookings() {
+	public List<Booking> getBookings() { // Get all the bookings from the api.
 
-		// 3. Get response from web service.
-
-		xmlResponse = target.request(MediaType.APPLICATION_XML).get(String.class);
 		
-		Bookings bookings = getBookingsFromXML(xmlResponse);
+		xmlResponse = target.request(MediaType.APPLICATION_XML).get(String.class); // Send the GET request to the api.
 		
-		List<Booking> bookingList;
+		Bookings bookings = getBookingsFromXML(xmlResponse); // Marshal the xml response into a Bookings object.
 		
-		bookingList = bookings.getBooking();
+		List<Booking> bookingList; // Set a list so we can access the individual Booking objects.
+		
+		bookingList = bookings.getBooking(); // Initialize the list to the bookings object.
 
-		return bookingList;
+		return bookingList; // Return the list of Booking objects.
 
 	}
 	
-	public Booking getBookingById(int id) {
-		target = client.target(base + "/" + id);
-		xmlResponse = target.request(MediaType.APPLICATION_XML).get(String.class);
-		Booking newBooking = getBookingFromXML(xmlResponse);
-		return newBooking;
+	public Booking getBookingById(int id) { // Get a single booking based on its id.
+		target = client.target(base + "/" + id); // Add the id parameter to the base URI.
+		xmlResponse = target.request(MediaType.APPLICATION_XML).get(String.class); // Send the GET request to the api.
+		Booking newBooking = getBookingFromXML(xmlResponse); // Marshal the response into a Booking object.
+		return newBooking; // Return that booking object.
 		
 	}
 	
-	public void updateBooking(Booking booking) {
-		target = client.target(base + "/" + booking.getBookingId());
+	public void updateBooking(Booking booking) { // Put(update) a booking object. 
+		target = client.target(base + "/" + booking.getBookingId()); // Use the booking objects id to appent to the base URI.
 		
 		send = getBookingAsXML(booking); // Convert the updated booking object to xml.
 		
-		response = target.request().put(Entity.xml(send));
+		response = target.request().put(Entity.xml(send)); // Send the PUT request to the api.
 		
 		System.out.println(response); // Read the response.
 		
 	}
 	
-	public void createBooking(Booking booking) {
-		target = client.target(base);
+	public void createBooking(Booking booking) { // Post(create) a new booking object.
+		target = client.target(base); // reset the target to the base URI.
 		
-		send = getBookingAsXML(booking); // Convert the updated booking object to xml.
+		send = getBookingAsXML(booking); // Convert the new booking object to xml.
 		
-		response = target.request().post(Entity.xml(send));
+		response = target.request().post(Entity.xml(send)); // Send the POST request to the api.
 		
 		System.out.println(response); // Read the response.
 	}
 	
-	public void deleteBooking(int id) {
-		target = client.target(base + "/" + id);
+	public void deleteBooking(int id) { // Delete an existing booking object.
+		target = client.target(base + "/" + id); // Append the id the base URI.
 		
-		response = target.request().delete();
+		response = target.request().delete(); // Send the DELETE request to the api.
 		
 		System.out.println(response); // Read the response.
 		
