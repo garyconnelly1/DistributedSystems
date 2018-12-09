@@ -71,9 +71,14 @@ public class BookingController { // This is an RMI client that will be used to a
 	}
 
 	public void createBooking(ReturnedBooking booking) { // Method to create a new booking in the database.
+		
+		
 		String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + "," + booking.getVehicleId() + ","
-				+ booking.getCustomerId() + ",\"" + booking.getStartDate() + "\",\"" + booking.getEndDate() + "\");"; // Construct the sql query to create a database record.
-
+				+ booking.getCustomerId() + ",\"" + booking.getStartDate() + "\",\"" + booking.getEndDate() + "\")"; // Construct the sql query to create a database record.
+		
+		SQLParser parser = new SQLParser();
+		query = parser.parseSQL(query);
+		
 		try {
 			bookingService.createBooking(query); // Invoke the remote method.
 		} catch (RemoteException e) {
@@ -88,6 +93,10 @@ public class BookingController { // This is an RMI client that will be used to a
 				+ booking.getCustomerId() + ", " + "start_date =\"" + booking.getStartDate() + "\", " + "end_date =\""
 				+ booking.getEndDate() + "\" WHERE booking_id=" + booking.getBookingId() + ";"; // Construct the sql query to update a database record.
 
+		SQLParser parser = new SQLParser();
+		query = parser.parseSQL(query);
+		
+		
 		try {
 			bookingService.updateBooking(query); // Invoke the remote method.
 		} catch (RemoteException e) {
@@ -99,6 +108,9 @@ public class BookingController { // This is an RMI client that will be used to a
 	
 	public void deleteBooking(int id) { // Method for deleting a booking from the database.
 		String query = "DELETE FROM bookings WHERE booking_id =" + id + ";"; // Construct the sql query to delete a database record
+		
+		SQLParser parser = new SQLParser();
+		query = parser.parseSQL(query);
 		
 		try {
 			bookingService.deleteBooking(query); // Invoke the remote method.
