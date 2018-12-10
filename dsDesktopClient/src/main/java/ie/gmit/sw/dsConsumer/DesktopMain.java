@@ -32,10 +32,10 @@ public class DesktopMain {
 			System.out.println("Press 1: ----------------------> Read all Bookings.");
 			System.out.println("Press 2: ----------------------> Update a Booking.");
 			System.out.println("Press 3: ----------------------> Create a new Booking.");
+			System.out.println("Press 4: ----------------------> Delete a Booking.");
 
 			String s = reader.nextLine();
 			if (s.equals("1")) {
-				System.out.println("You pressed: " + s);
 				System.out.println("Loading(Please wait a moment...) ");
 				getAllBookings();
 			} else if (s.equals("2")) {
@@ -45,6 +45,8 @@ public class DesktopMain {
 				updateBooking(id);
 			} else if (s.equals("3")) {
 				createBooking();
+			} else if (s.equals("4")) {
+				deleteBooking();
 			}
 
 			System.out.println("Type 'QUIT' to exit Program, Any other key to continue:");
@@ -113,7 +115,7 @@ public class DesktopMain {
 			System.out.println("Enter the new Start_Date");
 			String newDate = reader.nextLine();
 			booking.setStartDate(newDate);
-		} else if (input.equals("d")) {
+		} else if (input.equals("4")) {
 			System.out.println("Enter the new End_Date");
 			String newDate = reader.nextLine();
 			booking.setEndDate(newDate);
@@ -121,6 +123,7 @@ public class DesktopMain {
 			System.out.println("Not one of the options.");
 		}
 
+		System.out.println("Updating Booking ...");
 		access.updateBooking(booking);
 		System.out.println("Booking updated!");
 	}
@@ -160,10 +163,23 @@ public class DesktopMain {
 		
 		access.createBooking(booking);
 		
-		System.out.println("Booking Created!");
+		System.out.println("Booking Created!");	
+	}
+	
+	public static void deleteBooking() {
+		Scanner reader = new Scanner(System.in); // Reading from System.in
+
+		RestAccess access = new RestAccess();
 		
+		System.out.println("Enter the ID of the Booking you wish to delete: ");
+		int id = reader.nextInt();
 		
+		System.out.println("===============================");
+		System.out.println("Deleting booking with ID: " + id + " ...");
 		
+		access.deleteBooking(id);
+		
+		System.out.println("Booking Deleted! ");
 	}
 
 }
