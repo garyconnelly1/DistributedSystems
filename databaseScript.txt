@@ -1,0 +1,44 @@
+Drop database carBookingProject;
+create database carBookingProject;
+use carBookingProject;
+create table customers(
+	customer_id INT NOT NULL AUTO_INCREMENT,
+	first_name char(25),
+	last_name char(25),
+	age int,
+	county char(25),
+	dateOfBirth char(25),
+	PRIMARY KEY (customer_id)
+);
+
+create table vehicles(
+	vehicle_id INT NOT NULL AUTO_INCREMENT,
+	vehicle_type char(25),
+	vehicle_year char(25),
+	vehicle_colour char(25),
+	vehicle_engine float,
+	PRIMARY KEY (vehicle_id)
+);
+
+create table bookings(
+	booking_id int NOT NULL AUTO_INCREMENT,
+	vehicle_id int,
+	customer_id int,
+	start_date char(25),
+	end_date char(25),
+	PRIMARY KEY (booking_id),
+	FOREIGN KEY (vehicle_id) REFERENCES vehicles (vehicle_id),
+	FOREIGN KEY (customer_id) REFERENCES customers (customer_id)
+);
+
+INSERT INTO customers VALUES(
+	1,"Gary", "Connelly", 22, "Galway", "03-03-1996"
+);
+
+INSERT INTO vehicles VALUES(
+	1, "Toyota", "01", "RED", 1.4
+);
+
+INSERT INTO bookings VALUES(
+	1,1,1,"01-01-2018","02-01-2018"
+);
