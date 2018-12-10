@@ -51,7 +51,7 @@ public class DesktopMain {
 			}
 
 			System.out.println("Type 'QUIT' to exit Program, Any other key to continue:"); // Allow the user to exit the program by typing "QUIT".
-			s = reader.nextLine();
+			s = reader.next();
 
 			if (s.equals("QUIT")) { // If the user enters "QUIT	"
 				isContinue = false; // Change the isContinue boolean to false, breaking out of the loop and exiting the program.
@@ -130,7 +130,7 @@ public class DesktopMain {
 		access.updateBooking(booking); // Call the updateBooking method of the access object.
 		System.out.println("Booking updated!"); // Inform the user that the booking has been updated.
 		
-		reader.close(); // Close the Reader.
+		//reader.close(); // Close the Reader.
 	}
 
 	public static void createBooking() { // Method to be called when the user wants to create a new booking.
@@ -173,7 +173,7 @@ public class DesktopMain {
 		
 		System.out.println("Booking Created!");	// Inform the user that a new booking has been created.
 		
-		reader.close(); // Close the reader.
+	//	reader.close(); // Close the reader.
 	}
 	
 	public static void deleteBooking() { // Method to be called when the user wants to delete a booking.
@@ -191,7 +191,7 @@ public class DesktopMain {
 		
 		System.out.println("Booking Deleted! "); // Inform the user that the booking has been deleted.
 		
-		reader.close(); // Close the Reader.
+	//	reader.close(); // Close the Reader.
 	}
 
 }
