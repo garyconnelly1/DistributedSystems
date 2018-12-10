@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<h1>Delete a Booking</h1>
+	<h1>Delete a Booking (Must enter ID as an Integer)</h1>
 
 	<div class="form-group">
 		<form method="post" action="BookingDeleted.jsp">
