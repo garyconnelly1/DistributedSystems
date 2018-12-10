@@ -79,6 +79,8 @@ public class DesktopMain {
 	}
 	
 	public static void updateBooking(int id) {
+		Scanner reader = new Scanner(System.in); // Reading from System.in
+		
 		RestAccess access = new RestAccess();
 		
 		Booking booking = access.getBookingById(id);
@@ -91,6 +93,42 @@ public class DesktopMain {
 		System.out.println("End Date: \t" + booking.getEndDate());
 		System.out.println("===============================");
 		System.out.println("");
+		
+		System.out.println("Press 1: ----------> To update Customer_ID");
+		System.out.println("Press 2: ----------> To update Vehicle_ID");
+		System.out.println("Press 3: ----------> To update Start_Date");
+		System.out.println("Press 4: ----------> To update End_Date");
+		String input = reader.nextLine();
+		if(input.equals("1")) {
+			System.out.println("Enter the new Customer_ID");
+			int newId = reader.nextInt();
+			Customer customer = new Customer();
+			customer.setCustomerId(newId);
+			booking.setCustomer(customer);
+		}
+		else if(input.equals("2")) {
+			System.out.println("Enter the new Customer_ID");
+			int newId = reader.nextInt();
+			Vehicle vehicle = new Vehicle();
+			vehicle.setId(newId);
+			booking.setVehicle(vehicle);
+		}
+		else if(input.equals("3")) {
+			System.out.println("Enter the new Start_Date");
+			String newDate = reader.nextLine();
+			booking.setStartDate(newDate);
+		}
+		else if(input.equals("d")) {
+			System.out.println("Enter the new End_Date");
+			String newDate = reader.nextLine();
+			booking.setEndDate(newDate);
+		}
+		else {
+			System.out.println("Not one of the options.");
+		}
+		
+		access.updateBooking(booking);
+		System.out.println("Booking updated!");
 		
 	}
 

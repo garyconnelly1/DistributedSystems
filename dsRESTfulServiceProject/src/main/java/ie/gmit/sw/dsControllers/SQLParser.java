@@ -10,6 +10,8 @@ public class SQLParser {
 	 */
 
 	public String parseSQL(String query) { // Take in an SQL query as a parameter.
+		
+		System.out.println(query);
 
 		int syntax = 0; // Initialize a counter and set it to 0.
 

@@ -91,7 +91,7 @@ public class BookingController { // This is an RMI client that will be used to a
 
 		String query = "UPDATE bookings SET vehicle_id =" + booking.getVehicleId() + ", " + "customer_id ="
 				+ booking.getCustomerId() + ", " + "start_date =\"" + booking.getStartDate() + "\", " + "end_date =\""
-				+ booking.getEndDate() + "\" WHERE booking_id=" + booking.getBookingId() + ";"; // Construct the sql query to update a database record.
+				+ booking.getEndDate() + "\" WHERE booking_id=" + booking.getBookingId() + ""; // Construct the sql query to update a database record.
 
 		SQLParser parser = new SQLParser();
 		query = parser.parseSQL(query);
@@ -107,7 +107,7 @@ public class BookingController { // This is an RMI client that will be used to a
 	}
 	
 	public void deleteBooking(int id) { // Method for deleting a booking from the database.
-		String query = "DELETE FROM bookings WHERE booking_id =" + id + ";"; // Construct the sql query to delete a database record
+		String query = "DELETE FROM bookings WHERE booking_id =" + id + ""; // Construct the sql query to delete a database record
 		
 		SQLParser parser = new SQLParser();
 		query = parser.parseSQL(query);
